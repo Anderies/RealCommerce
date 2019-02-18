@@ -4,15 +4,16 @@
 <link href="<?php echo base_url()?>template/AdminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css" />
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Data Member</h3>
+        <h3 class="box-title">Data Transaksi</h3>
     </div><!-- /.box-header -->                              
         <div class="box-body table-responsive">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                         <th>No</th>
-                        <th>Nama Lengkap</th>
-                        <th>Email</th>
-                        <th>Alamat</th>
+                        <th>Nama Pemesan</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>No Resi</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -21,13 +22,15 @@
                     <?php
                     $no=1;
                     foreach ($record as $r){
+                        $status=$r->status==1?'Proses':'Selesai';
                         echo "<tr>
                                 <td width='10'>$no</td>
                                 <td>$r->nama_lengkap</td>
-                                <td>$r->email</td>
-                                <td>$r->alamat</td>
-                                <td width='10'>".anchor("admin/member/detail/".$r->member_id,"<span class='glyphicon glyphicon-tags' aria-hidden='true'></span>",array('title'=>'edit data'))."</td>
-                                <td width='10'>".anchor("admin/member/delete/".$r->member_id,"<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>",array('title'=>'delete data'))."</td>
+                                <td>$r->tanggal</td>
+                                <td>$status</td>
+                                <td>$r->no_resi</td>
+                                <td width='10'>".anchor("admin/transaksi/detail/".$r->transaksi_id,"<span class='glyphicon glyphicon-tags' aria-hidden='true'></span>",array('title'=>'edit data'))."</td>
+                                <td width='10'>".anchor("admin/transaksi/delete/".$r->transaksi_id,"<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>",array('title'=>'delete data'))."</td>
                             </tr>";
                         $no++;
                     }

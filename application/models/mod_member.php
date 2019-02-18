@@ -3,11 +3,9 @@ class mod_member extends ci_model{
     function select_all(){
         return $this->db->get('tabel_member');
     }
-
     function select_parent(){
         return $this->db->get_where('tabel_member',array('parent'=>0));
     }
-
     function save(){
         $data=array(
             'nama_member'     => $this->input->post('nama'),
@@ -16,7 +14,6 @@ class mod_member extends ci_model{
             'nama_member_seo' =>seo_title($this->input->post('nama')));
         $this->db->insert('tabel_member',$data);
     }
-
     function update(){
         $data=array(
             'nama_member'     => $this->input->post('nama'),
