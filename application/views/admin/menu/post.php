@@ -16,7 +16,7 @@
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label>Nama Menu</label>
-                                            <input type="text" class="form-control" placeholder="Nama Menu" name="nama">
+                                            <input type="text" class="form-control" placeholder="Nama Menu" name="nama_menu">
                                         </div>
                                         <div class="form-group">
                                             <label>Link</label>

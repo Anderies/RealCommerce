@@ -10,7 +10,7 @@ class mod_menu extends ci_model{
 
     function save(){
         $data=array(
-            'menu_title'     => $this->input->post('nama_menu'),
+            'menu_title'        => $this->input->post('nama_menu'),
             'parent'            =>$this->input->post('parent'),
             'link'              =>$this->input->post('link'),
             'menu_title_seo' =>seo_title($this->input->post('nama')));
