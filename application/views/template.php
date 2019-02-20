@@ -112,24 +112,26 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html" class="active">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
-                                    </ul>
-                                </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+							<li><a href="index.html" class="active">Home</a></li>
+                                <?php
+                                $parent = $this->db->get_where('tabel_menu',array('parent'=>0));
+                                foreach ($parent->result() as $p){
+                                    //check dlu
+                                    $child=$this->db->get_where('tabel_menu',array('parent'=>$p->menu_id));
+                                    if($child->num_rows()>0)
+                                    {
+                                        //tampilkan sub menu
+                                        echo "<li class='dropdown'>". anchor('#',$p->menu_title); 
+                                        echo "<ul role='menu' class='sub-menu'>";
+                                        foreach ($child->result() as $c){
+                                            echo "<li>".anchor($c->link,$c->menu_title)."</li>";  
+                                        }
+                                        echo "</ul></li>";
+                                    }else{
+                                        echo "<li>".anchor($p->link,$p->menu_title)."</li>";
+                                    }
+                                }
+                                ?>
 							</ul>
 						</div>
 					</div>
@@ -215,110 +217,46 @@
 					<div class="left-sidebar">
 						<h2>Category</h2>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Sportswear
-										</a>
-									</h4>
-								</div>
-								<div id="sportswear" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="#">Nike </a></li>
-											<li><a href="#">Under Armour </a></li>
-											<li><a href="#">Adidas </a></li>
-											<li><a href="#">Puma</a></li>
-											<li><a href="#">ASICS </a></li>
-										</ul>
+						
+							<?php 
+							$mainKategory = $this->db->get_where('tabel_kategori',array('parent'=>0));
+							foreach ($mainKategory->result() as $k){
+								$subKategory = $this->db->get_where('tabel_kategori',array('parent'=>$k->kategori_id));
+								if($subKategory->num_rows()>0)
+								{
+									echo '<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#'.$k->nama_kategori.'" >
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												'.$k->nama_kategori.'
+											</a>
+										</h4>
 									</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#mens">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Mens
-										</a>
-									</h4>
-								</div>
-								<div id="mens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="#">Fendi</a></li>
-											<li><a href="#">Guess</a></li>
-											<li><a href="#">Valentino</a></li>
-											<li><a href="#">Dior</a></li>
-											<li><a href="#">Versace</a></li>
-											<li><a href="#">Armani</a></li>
-											<li><a href="#">Prada</a></li>
-											<li><a href="#">Dolce and Gabbana</a></li>
-											<li><a href="#">Chanel</a></li>
-											<li><a href="#">Gucci</a></li>
-										</ul>
+									<div id="'.$k->nama_kategori.'" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>';
+												foreach($subKategory->result() as $s){
+													echo "<li>".anchor($s->link,$s->nama_kategori)."</li>";
+												}
+
+											echo'</ul>
+										</div>
 									</div>
-								</div>
-							</div>
+								</div>';
+
+								}else{
+									echo "<div class='panel panel-default'>
+										  	<div class='panel-heading'>
+										  <h4 class='panel-title'>".anchor($k->link,$k->nama_kategori)."</h4>
+										  </div>
+										  </div>";
+								}
+							}
 							
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#womens">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Womens
-										</a>
-									</h4>
-								</div>
-								<div id="womens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="#">Fendi</a></li>
-											<li><a href="#">Guess</a></li>
-											<li><a href="#">Valentino</a></li>
-											<li><a href="#">Dior</a></li>
-											<li><a href="#">Versace</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Kids</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Fashion</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Households</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Interiors</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Clothing</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Bags</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Shoes</a></h4>
-								</div>
-							</div>
+							?>
+
+
 						</div><!--/category-products-->
 					
 						<div class="brands_products"><!--brands_products-->
