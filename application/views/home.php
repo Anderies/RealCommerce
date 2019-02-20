@@ -17,7 +17,7 @@
                                             <p><?php echo $p->nama_product?></p>
                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                             <?php
-                                            echo anchor('product/'.$p->nama_product_seo,'<i class="fa fa-shopping-cart"></i> Detail',array('class'=>'btn btn-default add-to-cart'))
+                                            echo anchor('product/detail/'.$p->nama_product_seo,'<i class="fa fa-shopping-cart"></i> Detail',array('class'=>'btn btn-default add-to-cart'))
                                             ?>
                                         </div>
                                         <div class="product-overlay">
@@ -26,7 +26,7 @@
                                                 <p><?php echo $p->nama_product?></p>
                                                 <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                <?php
-                                            echo anchor('product/'.$p->nama_product_seo,'<i class="fa fa-shopping-cart"></i> Detail',array('class'=>'btn btn-default add-to-cart'))
+                                            echo anchor('product/detail/'.$p->nama_product_seo,'<i class="fa fa-shopping-cart"></i> Detail',array('class'=>'btn btn-default add-to-cart'))
                                             ?>
                                                 
                                             </div>
