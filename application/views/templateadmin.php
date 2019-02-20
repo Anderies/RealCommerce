@@ -334,7 +334,7 @@
 
                 <!-- Main content -->
                 <section class="content"> 
-                      <?php echo $contents ;?>
+                      <?php echo $contents;?>
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
