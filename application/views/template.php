@@ -66,8 +66,8 @@
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="#">Canada</a></li>
-									<li><a href="#">UK</a></li>
+									<li><?php echo anchor('Language/change/id','Indonesia');?></li>
+									<li><?php echo anchor('Language/change/eng','English');?></li>
 								</ul>
 							</div>
 							
@@ -137,7 +137,13 @@
                                         }
                                         echo "</ul></li>";
                                     }else{
-                                        echo "<li>".anchor($p->link,$p->menu_title)."</li>";
+										if(empty($this->session->userdata('language')) or  $this->session->userdata('language')=='id')
+										{
+											//Gunakan Bahasa Indonesia
+											echo "<li>".anchor($p->link,$p->menu_title) . "</li>";
+										}else{
+										echo "<li>".anchor($p->link,$p->menu_eng)."</li>";
+									}
                                     }
                                 }
                                 ?>
@@ -246,7 +252,7 @@
 										<div class="panel-body">
 											<ul>';
 												foreach($subKategory->result() as $s){
-													echo "<li>".anchor($s->link,$s->nama_kategori)."</li>";
+													echo "<li>".anchor('kategori/'.$s->nama_kategori_seo,$s->nama_kategori)."</li>";
 												}
 
 											echo'</ul>
@@ -257,7 +263,7 @@
 								}else{
 									echo "<div class='panel panel-default'>
 										  	<div class='panel-heading'>
-										  <h4 class='panel-title'>".anchor($k->link,$k->nama_kategori)."</h4>
+										  <h4 class='panel-title'>".anchor('kategori/'.$k->nama_kategori_seo,$k->nama_kategori)."</h4>
 										  </div>
 										  </div>";
 								}
