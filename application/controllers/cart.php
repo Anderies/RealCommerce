@@ -40,6 +40,34 @@ class cart extends ci_controller{
         }
         redirect('cart/shopcart');
     }
+
+    function login(){
+        $this->template->load('template','login');
+    }
     
+    function signup_proses(){
+        $data = array(
+            'nama_lengkap'=> $this->input->post('nama'),
+            'email'=> $this->input->post('email'),
+            'no_hp' => $this->input->post('no_hp') ,
+            'alamat'=> $this->input->post('alamat'));
+            $this->db->insert('tabel_member',$data);
+            redirect('cart/login');
+    }
+
+    function login_proses(){
+        $nama = $this->input->post('nama');
+        $email = $this->input->post('email');
+        $check = $this->db->get_where('tabel_member',array('nama_lengkap' => $nama,'email'=> $email));
+        if($check->num_rows()>0){
+            $this->session->set_userdata(array('nama'=> $nama,'status_login'=>'sudah_login'));
+        }
+        redirect('cart/checkout');
+    }
+
+    function logout(){
+        $this->session->sess_destroy();
+        redirect('cart/login');
+    }
 }
 ?>
