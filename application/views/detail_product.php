@@ -37,9 +37,9 @@
 							</div>
 
 						</div>
-                                            <?php
-                                            echo form_open('cart/add_tocart');
-                                            ?>
+									<?php
+									echo form_open('cart/add_tocart');
+									?>
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
 								<img src="<?php echo base_url() ?>template/Eshopper/images/product-details/new.jpg" class="newarrival" alt="" />
@@ -49,8 +49,8 @@
 								<span>
 									<span><?php echo $product['harga']?></span>
 									<label>Quantity:</label>
-                                                                        <input type="hidden" name="product_id" value="<?php echo $product['product_id']?>">
-                                                                        <input type="text" name="qty" value="1" />
+													<input type="hidden" name="product_id" value="<?php echo $product['product_id']?>">
+													<input type="text" name="qty" value="1" />
 									<button type="submit"  class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
