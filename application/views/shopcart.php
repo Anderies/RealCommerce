@@ -18,7 +18,10 @@
 					<tbody>
 						<?php
 						$total = 0;
-						foreach($item as $i){
+						if($item->num_rows()==0){
+							echo "<tr><td>KERANJANG BELANJA ANDA MASIH KOSONG</td></tr>";
+						}else{
+						foreach($item->result() as $i){
 						?>
 
 						<tr>
@@ -33,8 +36,7 @@
 								<p>Rp.
 									<?php $subtotal=$i->harga * $i->qty;
 									echo $subtotal;
-									$total= $total+$subtotal;
-
+									$total= $total+$subtotal; 
 									?>
 								</p>
 							</td>
@@ -54,7 +56,7 @@
 							</td>
 						</tr>
 							<?php
-						}
+						}}
 						?>
 
 					</tbody>
@@ -62,13 +64,14 @@
 			</div>
 			<div class="col-sm-6">
 					<div class="total_area">
-						<ul>
-							<li>Total Harga <span>Rp.<?php echo $total?></span></li>
-						</ul>
-							<a class="btn btn-default check_out" href="">Check Out</a>
-							<button type="submit" class="btn btn-default update" >Update</button>
-					</div>
-				</div>
+            <ul>
+                <li>Total <span>Rp <?php echo $total;?></span></li>
+            </ul>
+				<?php
+				echo anchor('cart/checkout','Check Out',array('class'=>'btn btn-default check_out'));?>
+				<button type="submit" class="btn btn-default check_out">Update</button>
+        </div>
+	</div>
 		</div>
 					</form>
 	</section> <!--/#cart_items-->

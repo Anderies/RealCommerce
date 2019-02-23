@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.html"><img src="<?php echo base_url()?>template/Eshopper/images/home/logo.png" alt="" /></a>
+							<a href="<?php echo base_url();?>"><img src="<?php echo base_url()?>template/Eshopper/images/home/logo.png" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right">
 							<div class="btn-group">
@@ -96,7 +96,7 @@
 								<li><?php echo anchor('cart/login','<i class="fa fa-lock"></i> Login & SignUp')?></li> 
 								<?php
 								}else{
-									echo "<li>".anchor('#',"Selamat Datang".$this->session->userdata('nama'))."</li>";
+									echo "<li>".anchor('#',"Selamat Datang ". $this->session->userdata('nama'))."</li>";
 									echo "<li>".anchor('cart/logout',"<i class='fa fa-lock'></i> Logout")."</li>";
 								}
 								?>
@@ -121,7 +121,7 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="index.html" class="active">Home</a></li>
+							<li><a href="<?php echo base_url()?>" class="active">Home</a></li>
                                 <?php
                                 $parent = $this->db->get_where('tabel_menu',array('parent'=>0));
                                 foreach ($parent->result() as $p){

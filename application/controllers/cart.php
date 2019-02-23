@@ -6,6 +6,7 @@ class cart extends ci_controller{
         $product_data = array(
             'product_id'=>$this->input->post('product_id',TRUE),
             'qty'=> $this->input->post('qty',TRUE),
+            'ip' => $_SERVER['REMOTE_ADDR'],
             'transaksi_id'=>0);
 
          $this->db->insert('tabel_transaksi_detail',$product_data);
@@ -19,8 +20,7 @@ class cart extends ci_controller{
                 FROM tabel_transaksi_detail as tb1 , tabel_product as tb2
                 WHERE tb1.product_id=tb2.product_id and tb1.transaksi_id=0
                 order by tb1.detail_id";
-        $data['item'] = $this->db->query($query)->result();
-
+        $data['item'] = $this->db->query($query);
         $this->template->load('template','shopcart',$data);
     }
 
@@ -39,6 +39,54 @@ class cart extends ci_controller{
             $this->db->update('tabel_transaksi_detail',array('qty'=>$new_qty));
         }
         redirect('cart/shopcart');
+    }
+    
+    function proses_checkout(){
+        $member=$this->db->get_where('tabel_member',array('nama_lengkap'=>$this->session->userdata('nama')))->row_array();
+        $transaksi = array(
+            'member_id' => $member['member_id'],
+            'tanggal' => date("Y-m-d"),
+            'status' => 1,
+            'no_resi' => ''
+        );
+       $this->db->insert('tabel_transaksi',$transaksi);
+       $listProduct = $this->db->get_where('tabel_transaksi_detail',array('ip'=>$_SERVER['REMOTE_ADDR']));
+       $lastTransaksi = $this->db->get_where('tabel_transaksi',$transaksi)->row_array();
+       foreach($listProduct->result() as $l){
+           $this->db->where('detail_id',$l->detail_id);
+           $this->db->update('tabel_transaksi_detail',array('transaksi_id'=>$lastTransaksi['transaksi_id']));
+       } 
+    }
+    function checkout_guest(){
+        //registerkan member
+        $data = array(
+            'nama_lengkap'=> $this->input->post('nama_lengkap'),
+            'email'=> $this->input->post('email'),
+            'no_hp' => $this->input->post('no_hp') ,
+            'alamat'=> $this->input->post('alamat'));
+        $this->db->insert('tabel_member',$data);
+        //set sessionnya  sehingga menjadi login
+        $this->session->set_userdata(array('nama'=> $this->input->post('nama_lengkap'),'status_login'=>'sudah_login'));
+        //panggil method checkout
+        $this->proses_checkout();
+        $this->template->load('template','berhasil');
+
+         
+    }
+
+    function checkout(){
+        if(isset($_POST['submit'])){
+            $this->proses_checkout();
+            $this->template->load('template','berhasil');
+            
+        }else{
+            if($this->session->userdata('nama')!=''){
+                $data['member'] = $this->db->get_where('tabel_member',array('nama_lengkap'=>$this->session->userdata('nama')))->row_array();
+                $this->template->load('template','checkout_member',$data);
+            }else{
+                $this->template->load('template','checkout_guest');
+            }
+        }
     }
 
     function login(){
